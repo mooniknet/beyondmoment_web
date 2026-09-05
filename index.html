@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-i18n-title="beyondPage.title">BeyondMoment — Every moment, beyond time. | MoonIK</title>
+<meta name="description" content="BeyondMoment는 당신의 소중한 순간을 이더리움 블록체인에 영구히 기록하고, 하나의 별자리로 이어 보여주는 MoonIK의 두 번째 앱 구상입니다." data-i18n-content="beyondPage.desc" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=22" />
+<link rel="icon" type="image/png" href="assets/favicon.png?v=2" />
+<script src="i18n.js?v=7" defer></script>
+<style>
+  body.bm { background: #05070f; font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif; }
+  .bm-serif { font-family: "Cormorant Garamond", serif; }
+  .bm-mono { font-family: "IBM Plex Mono", monospace; }
+  .bm main { overflow-x: clip; }
+  .bm header { font-family: "Jua", "Pretendard", "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .bm-icon-hero { width: 96px; height: 96px; border-radius: 24px; margin: 0 auto 4px; border: 1px solid rgba(206,216,255,0.24); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+
+  .bm-hero { position: relative; min-height: 88vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 90px 24px 130px; background: radial-gradient(120% 90% at 50% 8%, #1a2350 0%, #0d1230 38%, #05070f 78%); overflow: hidden; }
+  .bm-hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .bm-hero .bm-fade { position: absolute; left: 0; right: 0; bottom: -2px; height: 46%; background: linear-gradient(rgba(5,7,15,0) 0%, rgba(5,7,15,0.65) 55%, #05070f 100%); pointer-events: none; }
+  .bm-hero-inner { position: relative; display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; max-width: 860px; }
+  .bm-tag { display: flex; align-items: center; gap: 10px; padding: 8px 18px; border: 1px solid rgba(255,217,160,0.28); border-radius: 999px; font-size: 13px; letter-spacing: 0.18em; color: #ffd9a0; text-transform: uppercase; background: rgba(255,217,160,0.05); }
+  .bm-tag .dot { width: 5px; height: 5px; border-radius: 50%; background: #ffd9a0; box-shadow: 0 0 10px #ffd9a0; }
+  .bm-hero h1 { margin: 0; font-weight: 400; font-size: clamp(52px, 9vw, 132px); line-height: 0.95; letter-spacing: -0.01em; color: #fdfbf6; text-shadow: 0 0 60px rgba(180,200,255,0.35); }
+  .bm-hero h1 span { color: #ffd9a0; }
+  .bm-hero .bm-tagline { margin: 0; font-size: clamp(22px, 2.6vw, 32px); font-style: italic; color: #c6cdea; letter-spacing: 0.02em; }
+  .bm-hero .bm-desc { margin: 0; max-width: 620px; font-size: clamp(16px, 1.7vw, 20px); line-height: 1.95; color: #9aa3c4; font-weight: 300; }
+  .bm-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 6px; }
+  .bm-btn-primary, .bm-btn-ghost { display: flex; align-items: center; gap: 10px; padding: 16px 30px; border-radius: 999px; font-size: 16px; font-family: "Noto Sans KR", sans-serif; text-decoration: none; cursor: pointer; }
+  .bm-btn-primary { background: linear-gradient(135deg, #ffe3b4, #ffc98a); color: #1a1206; font-weight: 500; box-shadow: 0 12px 40px rgba(255,201,138,0.28); border: none; }
+  .bm-btn-ghost { border: 1px solid rgba(206,216,255,0.28); color: #dfe4fb; background: rgba(255,255,255,0.03); }
+  .bm-scrollcue { position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .bm-scrollcue span.label { font-size: 11px; letter-spacing: 0.22em; color: #6b7599; }
+  .bm-scrollcue span.line { width: 1px; height: 42px; background: linear-gradient(rgba(255,217,160,0.7), transparent); animation: bm-scrollcue 2.6s ease-in-out infinite; }
+  @keyframes bm-scrollcue { 0%,100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(10px); } }
+  @keyframes bm-pulse { 0%,100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.12); } }
+
+  .bm-section { position: relative; padding: 100px 24px; max-width: 1200px; margin: 0 auto; opacity: 0; transform: translateY(24px); transition: opacity 0.9s, transform 0.9s cubic-bezier(.2,.7,.2,1); }
+  .bm-section.bm-visible { opacity: 1; transform: none; }
+  .bm-section-head { display: flex; flex-direction: column; gap: 14px; align-items: center; text-align: center; margin-bottom: 64px; }
+  .bm-eyebrow { font-size: 12px; letter-spacing: 0.26em; }
+  .bm-section-head h2 { margin: 0; font-weight: 400; font-size: clamp(36px, 4.6vw, 62px); color: #fdfbf6; }
+  .bm-section-head p { margin: 0; max-width: 560px; font-size: 17px; line-height: 1.9; color: #8f98ba; font-weight: 300; }
+
+  .bm-promise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+  .bm-card { position: relative; padding: 40px 34px 44px; border-radius: 22px; border: 1px solid rgba(160,176,235,0.14); background: linear-gradient(165deg, rgba(30,40,84,0.75), rgba(11,16,38,0.6)); overflow: hidden; }
+  .bm-card .glow { position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; }
+  .bm-card .icon { position: relative; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 26px; }
+  .bm-card h3 { margin: 0 0 14px; font-size: 22px; font-weight: 500; color: #f4f6ff; }
+  .bm-card p { margin: 0; font-size: 16px; line-height: 1.95; color: #949dbf; font-weight: 300; }
+
+  .bm-preview-wrap { display: flex; flex-wrap: wrap; gap: 56px 40px; justify-content: center; align-items: flex-start; }
+  .bm-phone-col { display: flex; flex-direction: column; align-items: center; gap: 22px; width: 300px; max-width: 100%; }
+  .bm-phone { position: relative; width: 300px; max-width: 100%; height: 616px; border-radius: 46px; padding: 10px; background: linear-gradient(160deg, #2a3160, #12162e); box-shadow: 0 40px 90px rgba(0,0,0,0.6), 0 0 0 1px rgba(180,196,255,0.12); }
+  .bm-screen { position: relative; width: 100%; height: 100%; border-radius: 38px; overflow: hidden; display: flex; flex-direction: column; }
+  .bm-statusbar { display: flex; justify-content: space-between; padding: 16px 22px 6px; font-size: 11px; color: #cfd6f4; flex: 0 0 auto; }
+  .bm-phone-caption { display: flex; flex-direction: column; gap: 6px; text-align: center; }
+  .bm-phone-caption strong { font-size: 16px; font-weight: 500; color: #eef1fb; }
+  .bm-phone-caption span { font-size: 14px; color: #8f98ba; font-weight: 300; }
+
+  .bm-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+  .bm-step { padding: 32px 26px 34px; border-radius: 20px; border: 1px solid rgba(160,176,235,0.14); background: rgba(255,255,255,0.027); display: flex; flex-direction: column; gap: 14px; }
+  .bm-step.bm-step-final { border-color: rgba(255,217,160,0.3); background: linear-gradient(165deg, rgba(255,217,160,0.1), rgba(255,255,255,0.02)); }
+  .bm-step .num { font-size: 12px; }
+  .bm-step h3 { margin: 0; font-size: 20px; font-weight: 500; color: #f4f6ff; }
+  .bm-step p { margin: 0; font-size: 15px; line-height: 1.9; color: #949dbf; font-weight: 300; }
+  .bm-step .meta { margin-top: 4px; font-size: 11px; color: #6b7599; }
+
+  .bm-forever-outer { max-width: 1240px; margin: 0 auto; padding: 0 24px 40px; }
+  .bm-forever-banner { position: relative; border-radius: 28px; overflow: hidden; border: 1px solid rgba(160,176,235,0.14); background: radial-gradient(80% 120% at 20% 0%, #1a2350, #080c1e 70%); }
+  .bm-forever-banner canvas { display: block; width: 100%; height: 460px; }
+  .bm-forever-text { position: absolute; top: 40px; left: 40px; display: flex; flex-direction: column; gap: 12px; max-width: 380px; pointer-events: none; }
+  .bm-forever-text h2 { margin: 0; font-weight: 400; font-size: clamp(32px, 3.8vw, 50px); line-height: 1.15; color: #fdfbf6; }
+  .bm-forever-text p { margin: 0; font-size: 16px; line-height: 1.9; color: #9aa3c4; font-weight: 300; }
+
+  .bm-invite { text-align: center; padding-bottom: 40px; }
+  .bm-invite-inner { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+  .bm-invite-dot { width: 9px; height: 9px; border-radius: 50%; background: #ffd9a0; box-shadow: 0 0 24px 6px rgba(255,217,160,0.55); animation: bm-pulse 4s ease-in-out infinite; }
+  .bm-invite h2 { margin: 0; font-weight: 400; font-size: clamp(36px, 5vw, 68px); line-height: 1.1; color: #fdfbf6; }
+  .bm-invite p.bm-desc { margin: 0; font-size: 17px; line-height: 1.95; color: #8f98ba; font-weight: 300; }
+  .bm-invite-form { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; width: 100%; max-width: 460px; margin-top: 6px; }
+  .bm-invite-form input { flex: 1 1 220px; padding: 16px 20px; border-radius: 999px; border: 1px solid rgba(206,216,255,0.22); background: rgba(255,255,255,0.04); color: #eef1fb; font-family: "Noto Sans KR", sans-serif; font-size: 15px; outline: none; }
+  .bm-invite-form button { padding: 16px 28px; border-radius: 999px; border: none; background: linear-gradient(135deg, #ffe3b4, #ffc98a); color: #1a1206; font-family: "Noto Sans KR", sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; }
+  .bm-invite .bm-nospam { font-size: 12px; color: #6b7599; }
+
+  .bm footer { border-top: 1px solid rgba(160,176,235,0.1); }
+  .bm footer .foot-links a { color: #9aa3c4; }
+  .bm footer .foot-links a:hover { color: #ffd9a0; }
+
+  @media (max-width: 780px) {
+    .bm-section { padding: 72px 24px; }
+    .bm-forever-text { max-width: 260px; left: 24px; top: 28px; }
+  }
+</style>
+</head>
+<body class="bm">
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="https://moonik.net" class="logo"><img src="assets/moonik-logo-nav.png" alt="MoonIK" /></a>
+      <div class="nav-links">
+        <a href="https://moonik.net/about.html" data-i18n="nav.about">회사 소개</a>
+        <a href="https://moonik.net/dallae.html" data-i18n="nav.dallae">달래</a>
+        <a href="index.html" data-i18n="beyond.name" class="nav-active">BeyondMoment</a>
+      </div>
+      <div class="nav-actions">
+        <button id="lang-toggle" class="btn btn-ghost" onclick="moonikLang.toggle()">EN</button>
+        <a href="https://moonik.net" class="btn btn-ghost nav-back" data-i18n="nav.back">← 메인으로</a>
+        <button class="nav-toggle" onclick="moonikNav.toggle()" aria-label="Menu">☰</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="bm-hero">
+    <canvas class="bm-star-canvas" data-density="1" data-shooting="1"></canvas>
+    <div class="bm-fade"></div>
+    <div class="bm-hero-inner">
+      <img src="assets/beyondmoment-icon.png?v=2" alt="BeyondMoment 아이콘" class="bm-icon-hero dallae-icon-float" />
+      <h1 class="bm-serif">Beyond<span>Moment</span></h1>
+      <p class="bm-tagline bm-serif">Every moment, beyond time.</p>
+      <p class="bm-desc" data-i18n="bmPage.heroDesc">당신의 소중한 순간을 이더리움 블록체인에 영구히 기록하고,<br />시간의 흐름 속에서 하나의 별자리로 아름답게 이어 보여줍니다.</p>
+      <div class="bm-hero-actions">
+        <a href="#invite" class="bm-btn-primary" data-i18n="bmPage.cta1">내 별자리 만들기</a>
+        <a href="#preview" class="bm-btn-ghost" data-i18n="bmPage.cta2">앱 미리보기</a>
+      </div>
+    </div>
+    <div class="bm-scrollcue"><span class="label bm-mono">SCROLL</span><span class="line"></span></div>
+  </section>
+
+  <section class="bm-section" id="promise">
+    <div class="bm-section-head">
+      <span class="bm-eyebrow bm-mono" style="color:#ffd9a0;">01 — PROMISE</span>
+      <h2 class="bm-serif" data-i18n="bmPage.s1Title">사라지지 않는 세 가지 약속</h2>
+      <p data-i18n="bmPage.s1Desc">기록은 남기는 순간부터 당신의 것이 아니라, 시간의 것이 됩니다.</p>
+    </div>
+    <div class="bm-promise-grid">
+      <div class="bm-card">
+        <div class="glow" style="background: radial-gradient(circle, rgba(255,217,160,0.22), transparent 70%);"></div>
+        <div class="icon" style="border: 1px solid rgba(255,217,160,0.4);"><span style="width:12px; height:12px; background:#ffd9a0; border-radius:2px; transform:rotate(45deg); box-shadow:0 0 16px #ffd9a0;"></span></div>
+        <h3 data-i18n="bmPage.card1Title">영원히 기록되는 순간</h3>
+        <p data-i18n="bmPage.card1Desc">이더리움 블록체인에 새겨진 기록은 누구도 변경하거나 지울 수 없습니다. 서비스가 사라져도 당신의 순간은 남습니다.</p>
+      </div>
+      <div class="bm-card">
+        <div class="glow" style="background: radial-gradient(circle, rgba(143,214,232,0.2), transparent 70%);"></div>
+        <div class="icon" style="border: 1px solid rgba(143,214,232,0.4);"><span style="width:20px; height:20px; border-radius:50%; border:1px solid #8fd6e8;"></span></div>
+        <h3 data-i18n="bmPage.card2Title">시간을 잇는 여정</h3>
+        <p data-i18n="bmPage.card2Desc">블록 번호와 타임스탬프로, 흩어져 있던 순간들이 하나의 선으로 자연스럽게 연결됩니다.</p>
+      </div>
+      <div class="bm-card">
+        <div class="glow" style="background: radial-gradient(circle, rgba(242,167,195,0.2), transparent 70%);"></div>
+        <div class="icon" style="border: 1px solid rgba(242,167,195,0.42);"><span style="width:11px; height:11px; border-radius:50%; background:#f2a7c3; box-shadow:0 0 14px #f2a7c3;"></span></div>
+        <h3 data-i18n="bmPage.card3Title">당신만의 별자리</h3>
+        <p data-i18n="bmPage.card3Desc">기록이 쌓일수록 별은 늘어나고, 세상에 단 하나뿐인 당신의 별자리가 완성됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bm-section" id="preview" style="max-width:1200px; background:none;">
+    <div class="bm-section-head">
+      <span class="bm-eyebrow bm-mono" style="color:#8fd6e8;">02 — INSIDE THE APP</span>
+      <h2 class="bm-serif" data-i18n="bmPage.s2Title">밤하늘을 넘기는 방식으로</h2>
+      <p data-i18n="bmPage.s2Desc">전체 여정을 한눈에, 하나의 순간을 깊이. 별을 탭하면 그날의 기록이 열립니다.</p>
+    </div>
+
+    <div class="bm-preview-wrap">
+      <div class="bm-phone-col">
+        <div class="bm-phone">
+          <div class="bm-screen" style="background: linear-gradient(#0a1030 0%, #141a3d 46%, #3a2a4e 74%, #6a4a58 100%);">
+            <div class="bm-statusbar bm-mono"><span>9:41</span><span>▪▪▪ ⌁ ▮</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 22px 4px; color:#eaeeff; font-size:14px;">
+              <span style="opacity:.7;">☰</span>
+              <span style="font-weight:500; letter-spacing:.02em;" data-i18n="bmPage.mockConstellation">My Constellation</span>
+              <span style="opacity:.7;">⌕</span>
+            </div>
+            <svg viewBox="0 0 280 400" style="position:absolute; top:74px; left:0; width:100%; height:400px;">
+              <path d="M92 34 C 130 74, 70 104, 104 150 S 60 216, 96 262 S 132 318, 106 372" fill="none" stroke="rgba(226,214,255,.42)" stroke-width="1" stroke-dasharray="4 6"></path>
+              <circle cx="92" cy="34" r="5" fill="#ffe3b4"></circle>
+              <circle cx="92" cy="34" r="13" fill="rgba(255,227,180,.16)"></circle>
+              <circle cx="104" cy="150" r="4.5" fill="#8fd6e8"></circle>
+              <circle cx="104" cy="150" r="12" fill="rgba(143,214,232,.14)"></circle>
+              <circle cx="96" cy="262" r="4.5" fill="#f2a7c3"></circle>
+              <circle cx="96" cy="262" r="12" fill="rgba(242,167,195,.14)"></circle>
+              <circle cx="106" cy="372" r="4" fill="#ffd9a0" opacity=".8"></circle>
+            </svg>
+            <div style="position:absolute; top:92px; left:120px; display:flex; flex-direction:column; gap:2px;">
+              <span class="bm-mono" style="font-size:10px; color:#ffd9a0;">#24,921,382</span>
+              <span class="bm-mono" style="font-size:9px; color:#8d96bb;">Aug 30, 2026</span>
+              <span style="font-size:12px; color:#f2f5ff; margin-top:3px;" data-i18n="bmPage.mockEntry1">Our story begins.</span>
+            </div>
+            <div style="position:absolute; top:206px; left:132px; display:flex; flex-direction:column; gap:2px;">
+              <span class="bm-mono" style="font-size:10px; color:#8fd6e8;">#32,112,870</span>
+              <span class="bm-mono" style="font-size:9px; color:#8d96bb;">Mar 14, 2029</span>
+              <span style="font-size:12px; color:#f2f5ff; margin-top:3px; line-height:1.4;" data-i18n="bmPage.mockEntry2">Luna came<br />into our lives.</span>
+            </div>
+            <div style="position:absolute; top:330px; left:126px; display:flex; flex-direction:column; gap:2px; opacity:.82;">
+              <span class="bm-mono" style="font-size:10px; color:#f2a7c3;">#33,512,984</span>
+              <span style="font-size:12px; color:#e8ecff; margin-top:3px;" data-i18n="bmPage.mockEntry3">Our first trip.</span>
+            </div>
+            <div style="position:absolute; bottom:76px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; padding:11px 22px; border-radius:999px; background:rgba(18,22,48,.82); border:1px solid rgba(255,217,160,.35); color:#ffe3b4; font-size:13px; backdrop-filter:blur(6px);">
+              <span style="font-size:11px;">✦</span> <span data-i18n="bmPage.mockMoment">Moment</span>
+            </div>
+            <div style="position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-around; align-items:center; padding:14px 12px 20px; background:rgba(7,10,26,.86); border-top:1px solid rgba(180,196,255,.1); font-size:9px; color:#7d87ad;" class="bm-mono">
+              <span style="color:#ffd9a0;" data-i18n="bmPage.mockNavJourney">Journey</span><span data-i18n="bmPage.mockNavMoments">Moments</span>
+              <span style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#ffe3b4,#ffc98a); color:#1a1206; display:flex; align-items:center; justify-content:center; font-size:16px;">+</span>
+              <span data-i18n="bmPage.mockNavSearch">Search</span><span data-i18n="bmPage.mockNavProfile">Profile</span>
+            </div>
+          </div>
+        </div>
+        <div class="bm-phone-caption">
+          <strong data-i18n="bmPage.phone1Caption">전체 여정</strong>
+          <span data-i18n="bmPage.phone1Sub">당신의 모든 순간이 별자리로 이어집니다.</span>
+        </div>
+      </div>
+
+      <div class="bm-phone-col">
+        <div class="bm-phone">
+          <div class="bm-screen" style="background: radial-gradient(90% 60% at 50% 44%, #1c2148 0%, #0b0f26 60%, #070a18 100%);">
+            <div class="bm-statusbar bm-mono"><span>9:41</span><span>▪▪▪ ⌁ ▮</span></div>
+            <div style="display:flex; justify-content:space-between; padding:8px 22px; color:#cfd6f4; font-size:15px; opacity:.75;"><span>‹</span><span>↗</span></div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin-top:18px;">
+              <span class="bm-mono" style="font-size:13px; color:#ffd9a0;">#27,884,021</span>
+              <span class="bm-mono" style="font-size:10px; color:#7d87ad;">Nov 23, 2026 14:32:18 UTC</span>
+            </div>
+            <h4 class="bm-serif" style="margin:22px 0 0; text-align:center; font-weight:400; font-size:34px; line-height:1.2; color:#fdfbf6;" data-i18n="bmPage.mockMarried">We got<br />married.</h4>
+            <div style="position:relative; height:140px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; margin-top:4px;">
+              <span style="position:absolute; width:150px; height:54px; border:1px solid rgba(255,217,160,.3); border-radius:50%; transform:rotate(-18deg);"></span>
+              <span style="position:absolute; width:96px; height:96px; border-radius:50%; background:radial-gradient(circle, rgba(255,227,180,.5), transparent 68%); animation: bm-pulse 5s ease-in-out infinite;"></span>
+              <span style="position:relative; width:15px; height:15px; border-radius:50%; background:#fff6e4; box-shadow:0 0 34px 8px rgba(255,217,160,.7);"></span>
+              <span style="position:absolute; top:6px; font-size:13px; color:#f2a7c3;">♥</span>
+            </div>
+            <div class="bm-mono" style="flex:0 0 auto; margin:auto 18px 34px; border-radius:18px; border:1px solid rgba(180,196,255,.12); background:rgba(255,255,255,.035); overflow:hidden; font-size:10px;">
+              <div style="display:flex; justify-content:space-between; padding:13px 16px; border-bottom:1px solid rgba(180,196,255,.08);"><span style="color:#7d87ad;" data-i18n="bmPage.mockBlockLabel">Ethereum Block</span><span style="color:#e6ebff;">#27,884,021</span></div>
+              <div style="display:flex; justify-content:space-between; padding:13px 16px; border-bottom:1px solid rgba(180,196,255,.08);"><span style="color:#7d87ad;" data-i18n="bmPage.mockTimestampLabel">Timestamp</span><span style="color:#e6ebff;">2026-11-23 14:32</span></div>
+              <div style="display:flex; justify-content:space-between; padding:13px 16px; border-bottom:1px solid rgba(180,196,255,.08);"><span style="color:#7d87ad;" data-i18n="bmPage.mockTxLabel">Transaction</span><span style="color:#e6ebff;">0x3af…8e21</span></div>
+              <div style="display:flex; justify-content:space-between; padding:13px 16px;"><span style="color:#7d87ad;" data-i18n="bmPage.mockAuthorLabel">Author</span><span style="color:#e6ebff;">0x72af…9c13</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="bm-phone-caption">
+          <strong data-i18n="bmPage.phone2Caption">순간 상세 보기</strong>
+          <span data-i18n="bmPage.phone2Sub">하나의 별을 탭하면 그 순간이 열립니다.</span>
+        </div>
+      </div>
+
+      <div class="bm-phone-col">
+        <div class="bm-phone">
+          <div class="bm-screen" style="background: linear-gradient(#0b0f26, #0a0d20);">
+            <div class="bm-statusbar bm-mono"><span>9:41</span><span>▪▪▪ ⌁ ▮</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 22px 2px;">
+              <span class="bm-serif" style="font-size:26px; color:#fdfbf6;">2026</span>
+              <span style="color:#8f98ba;">→</span>
+            </div>
+            <div style="display:flex; gap:6px; padding:14px 18px 10px; font-size:12px; color:#7d87ad;">
+              <span>Aug</span><span>Sep</span><span>Oct</span>
+              <span style="padding:3px 10px; border-radius:999px; background:rgba(255,217,160,.14); color:#ffd9a0;">Nov</span>
+              <span>Dec</span>
+            </div>
+            <div class="bm-mono" style="display:flex; justify-content:space-between; padding:8px 18px 6px; font-size:9px; color:#6b7599;">
+              <span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:0 16px 14px; font-size:12px; color:#c3cae8;">
+              <span style="width:26px; text-align:center;">22</span>
+              <span style="width:26px; height:26px; border-radius:50%; background:#ffd9a0; color:#1a1206; display:flex; align-items:center; justify-content:center; font-weight:500;">23</span>
+              <span style="width:26px; text-align:center;">24</span><span style="width:26px; text-align:center;">25</span><span style="width:26px; text-align:center;">26</span><span style="width:26px; text-align:center;">27</span><span style="width:26px; text-align:center;">28</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px; padding:6px 16px 20px; overflow:hidden;">
+              <div style="display:flex; gap:12px; align-items:stretch;">
+                <span style="width:7px; height:7px; margin-top:16px; border-radius:50%; background:#ffd9a0; flex:0 0 auto;"></span>
+                <div style="flex:1 1 0%; padding:14px 16px; border-radius:16px; background:rgba(255,255,255,.043); border:1px solid rgba(180,196,255,.1); position:relative;">
+                  <span style="position:absolute; top:14px; right:14px; width:10px; height:10px; border-radius:50%; background:#f2a7c3; box-shadow:0 0 10px #f2a7c3;"></span>
+                  <div class="bm-mono" style="font-size:10px; color:#ffd9a0;">#27,884,021</div>
+                  <div class="bm-mono" style="font-size:9px; color:#7d87ad; margin-top:3px;">Nov 23, 2026</div>
+                  <div style="font-size:13px; color:#f2f5ff; margin-top:9px;" data-i18n="bmPage.mockCal1">We got married.</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; align-items:stretch;">
+                <span style="width:7px; height:7px; margin-top:16px; border-radius:50%; background:#8fd6e8; flex:0 0 auto;"></span>
+                <div style="flex:1 1 0%; padding:14px 16px; border-radius:16px; background:rgba(255,255,255,.043); border:1px solid rgba(180,196,255,.1);">
+                  <div class="bm-mono" style="font-size:10px; color:#8fd6e8;">#27,901,993</div>
+                  <div class="bm-mono" style="font-size:9px; color:#7d87ad; margin-top:3px;">Nov 24, 2026</div>
+                  <div style="font-size:13px; color:#f2f5ff; margin-top:9px;" data-i18n="bmPage.mockCal2">Thank you for being with me.</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:12px; align-items:stretch; opacity:.78;">
+                <span style="width:7px; height:7px; margin-top:16px; border-radius:50%; background:#ffd9a0; flex:0 0 auto;"></span>
+                <div style="flex:1 1 0%; padding:14px 16px; border-radius:16px; background:rgba(255,255,255,.043); border:1px solid rgba(180,196,255,.1);">
+                  <div class="bm-mono" style="font-size:10px; color:#ffd9a0;">#27,912,884</div>
+                  <div style="font-size:13px; color:#f2f5ff; margin-top:9px;" data-i18n="bmPage.mockCal3">A peaceful morning.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bm-phone-caption">
+          <strong data-i18n="bmPage.phone3Caption">월별 · 검색</strong>
+          <span data-i18n="bmPage.phone3Sub">시간의 흐름을 달력처럼 훑어볼 수 있어요.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bm-section" id="how">
+    <div class="bm-section-head">
+      <span class="bm-eyebrow bm-mono" style="color:#f2a7c3;">03 — HOW IT WORKS</span>
+      <h2 class="bm-serif" data-i18n="bmPage.s3Title">네 걸음이면 영원해집니다</h2>
+    </div>
+    <div class="bm-steps">
+      <div class="bm-step">
+        <span class="num bm-mono" style="color:#ffd9a0;">STEP 01</span>
+        <h3 data-i18n="bmPage.step1Title">작성하기</h3>
+        <p data-i18n="bmPage.step1Desc">오늘의 순간을 200자 안에 담아 짧은 글로 남깁니다.</p>
+        <span class="meta bm-mono">24 / 200</span>
+      </div>
+      <div class="bm-step">
+        <span class="num bm-mono" style="color:#8fd6e8;">STEP 02</span>
+        <h3 data-i18n="bmPage.step2Title">검토하기</h3>
+        <p data-i18n="bmPage.step2Desc">한 번 기록되면 수정할 수 없으니, 마지막으로 확인합니다.</p>
+      </div>
+      <div class="bm-step">
+        <span class="num bm-mono" style="color:#f2a7c3;">STEP 03</span>
+        <h3 data-i18n="bmPage.step3Title">기록하기</h3>
+        <p data-i18n="bmPage.step3Desc">블록체인에 새겨집니다. 평균 12초, 그리고 영원.</p>
+        <span class="meta bm-mono">Block #36,551,982</span>
+      </div>
+      <div class="bm-step bm-step-final">
+        <span class="num bm-mono" style="color:#ffd9a0;">STEP 04</span>
+        <h3 style="color:#fff6e4;" data-i18n="bmPage.step4Title">완료</h3>
+        <p style="color:#cbd0e8;" data-i18n="bmPage.step4Desc">새로운 별 하나가 당신의 별자리에 추가되었습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bm-section" style="padding:0 0 40px; max-width:none;">
+    <div class="bm-forever-outer">
+      <div class="bm-forever-banner">
+        <canvas class="bm-star-canvas" data-mode="constellation"></canvas>
+        <div class="bm-forever-text">
+          <span class="bm-eyebrow bm-mono" style="color:#ffd9a0;">04 — FOREVER</span>
+          <h2 class="bm-serif" data-i18n="bmPage.s4Title">무한히 이어지는 별자리</h2>
+          <p data-i18n="bmPage.s4Desc">기록이 계속될수록 당신의 별자리는 더 넓어지고 더 밝게 빛납니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bm-section bm-invite" id="invite">
+    <div class="bm-invite-inner">
+      <span class="bm-invite-dot"></span>
+      <h2 class="bm-serif" data-i18n="bmPage.inviteTitle">오늘의 순간을<br />첫 번째 별로.</h2>
+      <p class="bm-desc" data-i18n="bmPage.inviteDesc">사전 등록하시면 정식 출시 시 가장 먼저 초대해 드립니다.</p>
+      <form class="bm-invite-form" id="bm-invite-form">
+        <input type="email" id="bm-invite-email" data-i18n-placeholder="bmPage.emailPlaceholder" placeholder="이메일 주소" required />
+        <button type="submit" data-i18n="bmPage.registerBtn">사전 등록</button>
+      </form>
+      <span class="bm-nospam bm-mono" data-i18n="bmPage.noSpam">스팸은 보내지 않습니다.</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span class="bm-serif" style="font-size:20px; color:#dfe4fb;">BeyondMoment</span>
+    <div class="foot-links">
+      <a href="index.html" data-i18n="footer.home">홈</a>
+      <a href="mailto:moonik.net@gmail.com" data-i18n="footer.contact">문의하기</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    function fit(canvas) {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = canvas.parentElement.getBoundingClientRect();
+      if (r.width < 2 || r.height < 2) return null;
+      canvas.width = Math.max(1, Math.floor(r.width * dpr));
+      canvas.height = Math.max(1, Math.floor(r.height * dpr));
+      var ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx: ctx, w: r.width, h: r.height };
+    }
+
+    function initHeroStars(canvas) {
+      var density = parseFloat(canvas.getAttribute('data-density')) || 1;
+      var shootingEnabled = canvas.getAttribute('data-shooting') === '1';
+      var tints = ['255,246,228', '255,217,160', '200,216,255', '242,207,222', '175,220,236'];
+      var hero = null, stars = [], shoot = null, nextShoot = 2.2;
+
+      function size() {
+        var f = fit(canvas);
+        if (!f) return;
+        hero = f;
+        var n = Math.round((f.w * f.h) / 5200 * density);
+        stars = [];
+        for (var i = 0; i < n; i++) {
+          stars.push({
+            x: Math.random() * f.w,
+            y: Math.random() * f.h,
+            r: Math.random() * Math.random() * 1.7 + 0.35,
+            p: Math.random() * Math.PI * 2,
+            s: 0.4 + Math.random() * 1.3,
+            d: 0.02 + Math.random() * 0.06,
+            c: tints[(Math.random() * tints.length) | 0]
+          });
+        }
+      }
+
+      var last = performance.now();
+      var t = 0;
+      function loop(now) {
+        if (!hero) { requestAnimationFrame(loop); return; }
+        var dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        t += dt;
+        var ctx = hero.ctx, w = hero.w, h = hero.h;
+        ctx.clearRect(0, 0, w, h);
+
+        for (var i = 0; i < stars.length; i++) {
+          var s = stars[i];
+          s.y -= s.d;
+          if (s.y < -2) { s.y = h + 2; s.x = Math.random() * w; }
+          var a = 0.28 + 0.72 * (0.5 + 0.5 * Math.sin(t * s.s + s.p));
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + s.c + ',' + a.toFixed(3) + ')';
+          ctx.fill();
+          if (s.r > 1.15) {
+            var g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 9);
+            g.addColorStop(0, 'rgba(' + s.c + ',' + (a * 0.3).toFixed(3) + ')');
+            g.addColorStop(1, 'rgba(' + s.c + ',0)');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r * 9, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        if (shootingEnabled) {
+          nextShoot -= dt;
+          if (!shoot && nextShoot <= 0) {
+            shoot = { x: Math.random() * w * 0.7, y: Math.random() * h * 0.45, v: 520 + Math.random() * 260, a: 0.42 + Math.random() * 0.2, life: 0 };
+            nextShoot = 4 + Math.random() * 7;
+          }
+          if (shoot) {
+            shoot.life += dt;
+            shoot.x += Math.cos(shoot.a) * shoot.v * dt;
+            shoot.y += Math.sin(shoot.a) * shoot.v * dt;
+            var len = 150;
+            var tx = shoot.x - Math.cos(shoot.a) * len;
+            var ty = shoot.y - Math.sin(shoot.a) * len;
+            var fade = Math.max(0, 1 - shoot.life / 1.5);
+            var sg = ctx.createLinearGradient(shoot.x, shoot.y, tx, ty);
+            sg.addColorStop(0, 'rgba(255,248,232,' + (0.85 * fade).toFixed(3) + ')');
+            sg.addColorStop(1, 'rgba(255,248,232,0)');
+            ctx.strokeStyle = sg;
+            ctx.lineWidth = 1.6;
+            ctx.beginPath();
+            ctx.moveTo(shoot.x, shoot.y);
+            ctx.lineTo(tx, ty);
+            ctx.stroke();
+            if (shoot.x > w + 200 || shoot.y > h + 200 || fade <= 0) shoot = null;
+          }
+        }
+
+        requestAnimationFrame(loop);
+      }
+
+      size();
+      window.addEventListener('resize', size);
+      requestAnimationFrame(loop);
+    }
+
+    function initConstellationBanner(canvas) {
+      var cst = null, nodes = [], links = [];
+      var count = 34;
+
+      function size() {
+        var f = fit(canvas);
+        if (!f) return;
+        cst = f;
+        nodes = [];
+        for (var i = 0; i < count; i++) {
+          var px = 0.08 + (i / (count - 1)) * 0.86;
+          nodes.push({
+            bx: px * f.w,
+            by: f.h * (0.34 + 0.42 * Math.sin(i * 1.07) * Math.cos(i * 0.43)) + f.h * 0.14,
+            ph: Math.random() * Math.PI * 2,
+            r: 1.2 + Math.random() * 2.4,
+            big: Math.random() > 0.82
+          });
+        }
+        var isNarrow = f.w < 780;
+        var radius = isNarrow ? Math.min(70, f.w * 0.22) : Math.max(120, f.w * 0.11);
+        links = [];
+        for (var a = 0; a < nodes.length; a++) {
+          for (var b = a + 1; b < nodes.length; b++) {
+            var dx = nodes[a].bx - nodes[b].bx;
+            var dy = nodes[a].by - nodes[b].by;
+            if (Math.sqrt(dx * dx + dy * dy) < radius) links.push([a, b]);
+          }
+        }
+        if (isNarrow) {
+          links = links.filter(function (_, i) { return i % 2 === 0; });
+        }
+      }
+
+      var last = performance.now();
+      var t = 0;
+      function loop(now) {
+        if (!cst) { requestAnimationFrame(loop); return; }
+        var dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+        t += dt;
+        var ctx = cst.ctx, w = cst.w, h = cst.h;
+        ctx.clearRect(0, 0, w, h);
+
+        var pts = nodes.map(function (n) {
+          return {
+            x: n.bx + Math.sin(t * 0.28 + n.ph) * 9,
+            y: n.by + Math.cos(t * 0.22 + n.ph) * 11,
+            r: n.r,
+            big: n.big,
+            ph: n.ph
+          };
+        });
+
+        var grow = Math.min(1, t / 4.5);
+        ctx.lineWidth = 0.7;
+        links.forEach(function (pair, k) {
+          if (k / links.length > grow) return;
+          var a = pts[pair[0]], b = pts[pair[1]];
+          ctx.strokeStyle = 'rgba(206,216,255,' + (0.1 + 0.09 * Math.sin(t + k)).toFixed(3) + ')';
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        });
+
+        pts.forEach(function (p, i) {
+          if (i / pts.length > grow + 0.05) return;
+          var a = 0.45 + 0.5 * (0.5 + 0.5 * Math.sin(t * 1.3 + p.ph));
+          var col = p.big ? '255,227,180' : '224,232,255';
+          var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 10);
+          g.addColorStop(0, 'rgba(' + col + ',' + (a * 0.4).toFixed(3) + ')');
+          g.addColorStop(1, 'rgba(' + col + ',0)');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 10, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = 'rgba(' + col + ',' + a.toFixed(3) + ')';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(loop);
+      }
+
+      size();
+      window.addEventListener('resize', size);
+      requestAnimationFrame(loop);
+    }
+
+    document.querySelectorAll('.bm-star-canvas').forEach(function (canvas) {
+      if (canvas.getAttribute('data-mode') === 'constellation') {
+        initConstellationBanner(canvas);
+      } else {
+        initHeroStars(canvas);
+      }
+    });
+
+    var revealEls = document.querySelectorAll('.bm-section');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('bm-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealEls.forEach(function (el) { io.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('bm-visible'); });
+    }
+
+    var form = document.getElementById('bm-invite-form');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = document.getElementById('bm-invite-email').value.trim();
+        var subject = encodeURIComponent('BeyondMoment 사전 등록');
+        var body = encodeURIComponent('이메일: ' + email);
+        window.location.href = 'mailto:moonik.net@gmail.com?subject=' + subject + '&body=' + body;
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
