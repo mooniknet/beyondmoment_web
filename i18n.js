@@ -53,6 +53,16 @@
       "bmPage.cta1": "내 별자리 만들기",
       "bmPage.cta2": "앱 미리보기",
 
+      "bmPage.comicCoverTitle": "왜, 영원한 기록일까?",
+      "bmPage.comicCoverHint": "클릭해서 이야기를 펼쳐보세요",
+      "bmPage.comicPanelPlaceholder": "이미지 자리",
+      "bmPage.comic1": "우리는 매일, 소중한 순간을 만나요.",
+      "bmPage.comic2": "하지만 사진도, 글도, 서버가 사라지면 함께 사라져요.",
+      "bmPage.comic3": "그래서 사람이 먼저 확인한 순간만, 블록체인에 새겨요.",
+      "bmPage.comic4": "누구도 지우거나 바꿀 수 없어요. 회사가 사라져도요.",
+      "bmPage.comic5": "당신의 순간은, 시간이 흘러도 그 자리에 남아요.",
+      "bmPage.comicScrollHint": "SCROLL",
+
       "bmPage.s1Title": "사라지지 않는 세 가지 약속",
       "bmPage.s1Desc": "기록은 남기는 순간부터 당신의 것이 아니라, 시간의 것이 됩니다.",
       "bmPage.card1Title": "영원히 기록되는 순간",
@@ -257,6 +267,16 @@
       "bmPage.heroDesc": "We permanently record your precious moments on the Ethereum blockchain,<br />and beautifully connect them into a constellation across time.",
       "bmPage.cta1": "Create my constellation",
       "bmPage.cta2": "Preview the app",
+
+      "bmPage.comicCoverTitle": "Why does it last forever?",
+      "bmPage.comicCoverHint": "Click to open the story",
+      "bmPage.comicPanelPlaceholder": "Image goes here",
+      "bmPage.comic1": "Every day, we live a moment worth keeping.",
+      "bmPage.comic2": "But photos and words vanish when the server does.",
+      "bmPage.comic3": "So we engrave only human-verified moments onto the blockchain.",
+      "bmPage.comic4": "No one can erase or change it — not even if the company disappears.",
+      "bmPage.comic5": "Your moment stays there, no matter how much time passes.",
+      "bmPage.comicScrollHint": "SCROLL",
 
       "bmPage.s1Title": "Three promises that never fade",
       "bmPage.s1Desc": "The moment you record it, it belongs not to you, but to time itself.",
